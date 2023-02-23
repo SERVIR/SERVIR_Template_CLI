@@ -1,0 +1,159 @@
+/* styles common to multiple pages */
+#details {
+    top: 30px;
+    z-index: 20000;
+}
+
+.accordion-collapse.collapse.show {
+    width: 50vh;
+    max-width: 100%;
+}
+
+
+.arcgis-legend, .thredds-legend {
+    width: 100px;
+    height: 230px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #000000;
+    display: inline-flex;
+    margin: 10px 17px 10px 0;
+}
+
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+    width: 34px;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    color: #0080FF;
+}
+
+.nav-tabs .nav-item .nav-link {
+    color: gray;
+}
+
+
+.info_btn {
+    color: gray;
+}
+
+.leaflet-control-geocoder .leaflet-control-geocoder-alternatives a {
+    font-size: medium;
+    color: black;
+}
+
+.leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
+    position: inherit;
+    line-height: 2;
+}
+
+.accordion-body {
+    /*height: 35vh;*/
+    padding: 0;
+}
+
+
+.accordion-button:not(.collapsed) {
+    background-color: white;
+    color: gray;
+}
+
+.accordion-button {
+    color: gray;
+}
+
+p {
+    color: gray;
+}
+
+.leaflet-control-geocoder {
+    width: 100%;
+}
+
+.leaflet-control-geocoder-form input {
+    font-size: 100%;
+}
+
+
+label {
+    color: gray;
+}
+
+.modal-dialog,
+.modal-content {
+    min-width: 75%;
+    min-height: 75%;
+
+}
+
+.about_page {
+    bottom: 0;
+    width: 100%;
+}
+
+#navbar_app_base {
+    background-color: #0c1a4e;
+}
+
+#title_navbar {
+    margin-left: 5%
+}
+
+#ul_navbar {
+    margin-left: 55%;
+}
+
+
+/***********Common Map Styles***********/
+.leaflet-control-geosearch a.leaflet-bar-part:before {
+    border-top: 0;
+}
+
+a.leaflet-bar-part.leaflet-bar-part-single {
+    background-image: url('../images/search.png') !important;
+    background-size: 18px 18px;
+}
+
+.leaflet-control-geosearch a.leaflet-bar-part:after {
+    border: 0;
+}
+
+/**********end common map styles********/
+
+@media (max-width: 800px) {
+    .float-sm-start.ml-5 {
+        margin-left: unset !important;
+        width: 49%;
+        float: left;
+    }
+
+    .float-sm-end.mr-5 {
+        margin-right: unset !important;
+        width: 49%;
+        float: right;
+    }
+
+    .float-sm-end.mr-5 a {
+        display: block;
+        text-align: right;
+    }
+}
+html, body {
+  height: 100%;
+}
+#map_aoi {
+    height: 600px;
+    margin-bottom: 20px;
+}
+
+#export {
+    /*position: fixed;*/
+    z-index: 999;
+    height: 50px;
+    text-decoration: none;
+    padding-top: 10px;
+    /*width: 100%;*/
+    left: 0;
+    /*background:gray;*/
+}

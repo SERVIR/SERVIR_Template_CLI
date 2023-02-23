@@ -1,0 +1,62 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+{% load i18n account %}
+{% block script %}
+    <style lang="text/css">
+        .customGPlusSignIn {
+            cursor: pointer;
+        }
+
+        span {
+            font-family: serif;
+            font-weight: normal;
+        }
+
+        span.icon {
+            background: url('{% static "images/btn_google_dark_normal.svg" %}') transparent 5px 50% no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            width: 48px;
+            height: 42px;
+        }
+
+        .buttonText {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 24px;
+            font-weight: bold;
+            /* Use the Roboto font that is loaded in the <head> */
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+{% endblock %}
+
+
+
+
+
+{% block content %}
+        <div class="container-fluid">
+         <div class="row mt-4 justify-content-center">
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Geospatial App Authentication</h6>
+                    </div>
+                    <div class="card-body">
+                         <form method="post">
+            {% csrf_token %}
+            <div class="customGPlusSignIn text-center m-4" onclick="document.forms[0].submit();">
+                <span class="icon"></span>
+                <span class="buttonText">{% trans "Google Login" %}</span>
+            </div>
+
+        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+
+{% block title %}SERVIR AppTemplate - Home{% endblock %}
+{% block script %}
+    <!-- Highcharts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
+    <!-- Custom styles-->
+    <script src="{% static '/js/utils.js' %}"></script>
+    <link rel="stylesheet" href="{% static '/css/chart.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-gray-300">
+        <div class="row d-flex justify-content-center">
+            <!-- Chart from ClimateSERV API  -->
+            <!-- After the geojson file is received by the 'selectFiles' <input> tag below, a call is made to ClimateSERV API, as in the static/chart_from_ClimateSERV.js file -->
+            <div class="col-xl-12 col-lg-12 text-center mt-4">
+                <hr>
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Chart</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <label
+                                class="form-label" for="selectFiles">Upload your json file
+                            <input type="file" class="form-control" id="selectFiles"/>
+                        </label>
+
+                        <div id="loading_cserv" style="display: none;">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <figure class="highcharts-figure">
+                            <div id="chart-container2"></div>
+                            <p class="highcharts-description">
+                                This chart shows the use of a Line charts.
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#cservModal">
+                    Learn how to modify this page
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <script src="{% static '/js/chart_from_ClimateSERV.js' %}"></script>
+    {% include 'WebApp/chart_from_ClimateSERV_about.html' %}
+
+{% endblock %}
+
+

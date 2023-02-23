@@ -1,0 +1,85 @@
+/* styles specific to home.html */
+#title_class {
+    padding-top: 1.5rem;
+    width: 75%;
+    margin: auto;
+    font-size: 2.5rem;
+    font-family: Arial, serif;
+    text-shadow: black 0.1em 0.1em 0.2em;
+    color: white;
+}
+
+#tagline_class {
+    padding-top: 1.5rem;
+    width: 75%;
+    margin: auto;
+    font-size: 1.2rem;
+    font-family: Arial, serif;
+    text-shadow: black 0.1em 0.1em 0.2em;
+    color: white;
+}
+
+.vertical_center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.hero_style {
+    height: 50vh;
+    min-height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.flex_cards {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    box-shadow: black;
+}
+
+.app-card {
+    height: 300px;
+    width: 400px;
+}
+
+.card_bg {
+    background-size: cover;
+}
+
+@media (max-width: 800px) {
+    .hero_style {
+        height: 70vh;
+        min-height: 600px;
+    }
+}
+
+@media (max-width: 610px) {
+    .hero_style {
+        height: 70vh;
+        min-height: 550px;
+    }
+}
+
+@media (max-width: 490px) {
+    #title_class {
+        font-size: 1.4em;
+    }
+
+    #tagline_class {
+        font-size: 1.1em
+    }
+}
+
+@media (max-width: 350px) {
+    #title_class {
+        font-size: 1.1em;
+    }
+
+    #tagline_class {
+        font-size: .9em
+    }
+}

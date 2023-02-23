@@ -1,0 +1,74 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+
+{% block title %}SERVIR AppTemplate - Home{% endblock %}
+{% block script %}
+    <!-- Highcharts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
+    <!-- Custom styles-->
+    <script src="{% static '/js/utils.js' %}"></script>
+    <link rel="stylesheet" href="{% static '/css/chart.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-gray-300">
+        <div class="row d-flex justify-content-center mt-5">
+            <!-- Chart from SQLite database  -->
+            <!-- Data is available in SQLite database, which can be updated from 127.0.0.1/admin page. An ajax call is made to retrieve the chart data from the data models, as in the static/chart_from_SQLite.js file -->
+            <div class="col-xl-12 col-lg-12">
+
+                <div class="card shadow mb-4">
+
+                    <!-- Card Header -->
+                    <div
+                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Chart</h6>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div id="loading_sql" style="display: none;">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <label>Select the station to show: </label>
+                        <select id="stations">
+                            <option value='default'>Select</option>
+                            {% for station in stations %}
+                                <option value="{{ station.station_id }}">{{ station.station_name }} </option>
+                            {% empty %}
+                                <option>Sorry, no athletes in this list.</option>
+                            {% endfor %}
+                        </select>
+
+                        <figure class="highcharts-figure">
+                            <div id="chart-container3"></div>
+                            <p class="highcharts-description">
+                                This chart shows the use of a Line charts.
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#sqliteModal">
+                    Learn how to modify this page
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <script src="{% static '/js/chart_from_SQLite.js' %}"></script>
+    {% include 'WebApp/chart_from_SQLite_about.html' %}
+
+{% endblock %}

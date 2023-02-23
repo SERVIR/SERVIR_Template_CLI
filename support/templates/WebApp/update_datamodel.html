@@ -1,0 +1,84 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+
+{% block title %}SERVIR AppTemplate - Home{% endblock %}
+{% block script %}
+    <!-- Custom styles-->
+
+    <!-- Custom scripts-->
+    {#    <script>#}
+    {#        setTimeout(function () {#}
+    {#            if ($('#msg').length > 0) {#}
+    {#                $('#msg').remove();#}
+    {#            }#}
+    {#        }, 5000);#}
+    {#    </script>#}
+{% endblock %}
+<!-- Begin Page Content -->
+{% block content %}
+    <div class="container-fluid bg-gray-300">
+        <!-- Add record to Datamodel -->
+        <!-- After the user is authenticated(Login), the page displays the fields from Django form. Once submit is clicked, the record is updated in the backend model -->
+
+        <div class="card shadow mt-4 mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Add records to Measurements Table</h6>
+            </div>
+            <div class="card-body">
+                {% if user.is_authenticated %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    <form method="POST" action="">
+
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.stations.help_text }}</label>
+                            {{ form.stations }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> {{ form.measurement_date.help_text }}</label>
+                            {{ form.measurement_date }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.measurement_precip.help_text }}</label>
+                            {{ form.measurement_precip }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.measurement_temp.help_text }}</label>
+                            {{ form.measurement_temp }}
+                        </div>
+
+                        <br>
+                        <input type="submit" value="Submit" class="btn btn-primary">
+
+                    </form>
+
+                {% else %}
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <div class="card-body text-center">
+                                <h3>Please login and retry loading this page.</h3>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#datamodelModal">
+                    Learn how to modify this page
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+    {% include 'WebApp/update_datamodel_about.html' %}
+{% endblock %}

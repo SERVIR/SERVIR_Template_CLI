@@ -1,0 +1,84 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+{% block title %}SERVIR AppTemplate - Select AOI{% endblock %}
+{% block script %}
+    <!-- Custom styles-->
+    <!-- Custom scripts-->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.control.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+          integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+            integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+            integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+            crossorigin=""></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+    <script src="{% static 'js/basemaps.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-gray-300">
+        <!-- Select AOI -->
+        <!-- Allow the user to draw a polygon and download GEOJSON file for the same -->
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card mb-4 mt-4 shadow">
+                    <!-- Card Header -->
+                    <div
+                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Select AOI</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+
+                        <div id="map_aoi"></div>
+                        <a id="export" class="btn btn-primary text-center">Download the GEOJSON</a><label class="ml-2">Please
+                        draw an area of interest before downloading.</label>
+                    </div>
+                    <div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">About AOI</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-left text-dark">
+                            AOI stands for area of interest. Please draw any polygon using the map controls.
+                            <hr>
+                            Please click the 'Download the GEOJSON' button to download the drawn polygon as a geojson
+                            file.
+                            <hr>
+                            This page uses Leaflet JS library.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#aoiModal">
+                    Learn how to modify this page
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="{% static '/css/common.css' %}">
+    <script src="{% static 'js/select_aoi.js' %}"></script>
+    {% include 'WebApp/select_aoi_about.html' %}
+
+{% endblock %}

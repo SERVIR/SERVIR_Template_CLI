@@ -1,0 +1,107 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+{% block title %}SERVIR AppTemplate - Home{% endblock %}
+{% block script %}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.control.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+          integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+            integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+            integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+            crossorigin=""></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.min.js"></script>
+    <!-- Highcharts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
+    <!-- Custom styles-->
+    <script src="{% static '/js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"
+            integrity="sha512-WL3nAJlWFKoDShduxQRyY3wkBnQsINXdIfWIW48ZaPgYz1wYNnxIwFMMgigzSgjNBC2WWZ8Y8/sSyUU6abuF0g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="{% static '/css/chart.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container-fluid bg-gray-300">
+        <div class="row d-flex justify-content-center">
+            <!-- Chart from netCDF file  -->
+            <!-- After the geojson file is received by the 'selectFiles' <input> tag below, an ajax call is made to retrieve the timeseries data, as in the static/chart_from_netCDF.js file -->
+            <div class="col-xl-12 col-lg-12 text-center mt-4">
+                <hr>
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div
+                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Chart</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                 aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <label>Geographic extent of the info in the NetCDF used in this example</label>
+                        <div id="map_nc_img" class="m-auto">
+                            <img src="{% static 'images/static_nc.PNG' %}" height="250px">
+                        </div>
+                        <br>
+
+                        <label
+                                class="form-label" for="selectFiles">Upload your json file <input type="file"
+                                                                                                  class="form-control"
+                                                                                                  id="selectFiles"/>
+                        </label>
+                        <link rel="stylesheet" href="{% static 'css/common.css' %}">
+
+
+                        <div id="loading_nc" style="display: none;">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <figure class="highcharts-figure">
+                            <div id="chart-container"></div>
+                            <p class="highcharts-description">
+                                This example extracts and summarizes Air Quality data from a NetCDF file according to
+                                the boundary provided by the uploaded geojson file.
+                        </figure>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#netcdfModal">
+                    Learn how to modify this page
+                </button>
+            </div>
+        </div>
+        <br>
+
+    </div>
+    <script src="{% static '/js/chart_from_netCDF.js' %}"></script>
+    {% include 'WebApp/chart_from_netCDF_about.html' %}
+
+{% endblock %}

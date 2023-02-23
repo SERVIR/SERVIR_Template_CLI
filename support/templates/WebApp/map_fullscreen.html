@@ -1,0 +1,202 @@
+{% extends "WebApp/app_base.html" %}
+
+{% load static %}
+
+{% block title %}SERVIR AppTemplate - Home{% endblock %}
+{% block script %}
+    <!-- Leaflet-->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.control.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+          integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+            integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+            integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+            crossorigin=""></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.min.js"></script>
+    <script src="{% static '/js/L.Control.Opacity.js' %}"></script>
+    <link href="{% static '/css/L.Control.Opacity.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.5/leaflet-search.src.js"
+            integrity="sha512-PDM7dpetuBcPp2fV/ZyCj9BGV8ybPchsrSzQqVZ3WoM8YcxEa2lAj0n1+4MCRzgsEROmVTwQXGw0IrXCCgH+/Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static '/js/leaflet-providers.js' %}"></script>
+
+    <script src="{% static 'js/utils.js' %}"></script>
+
+    <script src="{% static 'js/basemaps.js' %}"></script>
+    <link
+            rel="stylesheet"
+            href="{% static '/css/geosearch.css' %}"
+    />
+
+    <link href="{% static '/css/full_map.css' %}" rel="stylesheet"/>
+
+    <script src="{% static '/js/geosearch.umd.js' %}"></script>
+    <script src="{% static '/js/map_utils.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid p-0  bg-gray-300">
+        <!-- Full Screen WMS map -->
+        <!-- This template can be used when there is a need to visualize GEE layers in a full screen page. To make any updates, visit map_fullscreen.js -->
+
+        <div class="row">
+                    <span
+                            id="nav_opener"
+                            onclick="openNav()">&#9776;</span>
+            <div id="mySidenav" class="sidenav">
+                <div class="map_control_style">
+                    <label id="control_label">Map Control</label>
+                    <a href="javascript:void(0)" onclick="closeNav()"> &times;</a>
+                </div>
+                <!-- Map Control -->
+                <!-- This is an side panel that has two collapsible tabs - Layers and Basemaps. -->
+                <div class="accordion" id="full_tab_container">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFull" aria-expanded="true"
+                                    aria-controls="collapseFull">
+                                Layers
+                            </button>
+                        </h2>
+                        <!-- Tab pane: Layers -->
+                        <!-- This consists of CHIRPS and ESI Layers. More text about the layer can be added in the popover below
+                             There are opacity controls for the layer and legends are displayed right under the checked layer name-->
+
+                        <div id="collapseFull" class="accordion-collapse collapse show"
+                             aria-labelledby="headingOne" data-bs-parent="#full_tab_container">
+                            <div class="accordion-body">
+                                <div class="side_panel">
+                                    <div class="d-inline-flex">
+                                        <input class="form-check-input" id="chirps_full" type="checkbox"/>
+                                        <label class="form-check-label" for="chirps_full">CHIRPS Layer</label>
+                                        <a class="fullmap_popover" role="button" href=#"
+                                           data-bs-toggle="popover" title="CHIRPS"
+                                           data-bs-trigger="focus" data-bs-content="Info about chirps"><i
+                                                class="fa-solid fa-circle-info info_btn"></i></a>
+                                    </div>
+
+                                    <input id="opacity_chirps_full"
+                                           type="range"
+                                           value="contrast"
+                                           max="0.5"
+                                           min="0"
+                                           step="0.01"
+                                           style="display: none;"
+                                    /><label class="ml-1"
+                                                                       id="chirps_full_opacity"></label>
+                                    <div id="legend_full_chirps"></div>
+                                    <div class="d-inline-flex"><input class="form-check-input" id="esi_full"
+                                                                      type="checkbox"/>
+                                        <label class="form-check-label" for="esi_full">ESI Layer</label>
+                                        <a class="full_map_popover" role="button" href=#"
+                                           data-bs-toggle="popover"
+                                           data-bs-trigger="focus" title="ESI"
+                                           data-bs-content="Info about esi"><i
+                                                class="fa-solid fa-circle-info info_btn"></i></a>
+                                    </div>
+
+                                    <input id="opacity_esi_full"
+                                           type="range"
+                                           value="contrast"
+                                           max="0.5"
+                                           min="0"
+                                           step="0.01"
+                                           style="display: none;"
+                                    /><label class="ml-1"
+                                                               id="esi_full_opacity"></label>
+                                    <div id="legend_full_esi"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab pane: Basemaps -->
+                    <!-- This tab is used when there is a need to change basemaps. The basemaps used are present in basemaps.js -->
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                Basemaps
+                            </button>
+                        </h2>
+
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body" id="basemaps" aria-labelledby="profile-tab">
+                                <div class="card-body text-center">
+                                    <div class="row row-centered pos">
+                                        <div class="col-sm-6">
+                                            <a class="basemap_img" id="osm" href="#"
+                                               onclick="add_basemap(this.id);"><img
+                                                    src="{% static 'images/basemaps/osm.png' %}" alt="img1"
+                                                    class="img-thumbnail">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a class="basemap_img" id="topo" href="#"
+                                               onclick="add_basemap(this.id);"><img
+                                                    src="{% static 'images/basemaps/topo.png' %}" alt="img1"
+                                                    class="img-thumbnail">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a class="basemap_img" id="gsatellite" href="#"
+                                               onclick="add_basemap(this.id);"><img
+                                                    src="{% static 'images/basemaps/gsatellite.png' %}" alt="img1"
+                                                    class="img-thumbnail">
+                                            </a>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <a class="basemap_img" id="satellite" href="#"
+                                               onclick="add_basemap(this.id);"><img
+                                                    src="{% static 'images/basemaps/satellite.png' %}" alt="img1"
+                                                    class="img-thumbnail">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a class="basemap_img" id="terrain" href="#"
+                                               onclick="add_basemap(this.id);"><img
+                                                    src="{% static 'images/basemaps/terrain.png' %}" alt="img1"
+                                                    class="img-thumbnail">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a class="basemap_img" id="delorme" href="#"
+                                               onclick="add_basemap(this.id);"><img
+                                                    src="{% static 'images/basemaps/delorme.png' %}" alt="img1"
+                                                    class="img-thumbnail">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="m-auto w-75 text-center">
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                            data-bs-target="#fullModal">
+                        Learn how to modify this page
+                    </button>
+                </div>
+            </div>
+            <div id="map3" style="height:calc(100vh - 166px);">
+            </div>
+            <script src="{% static '/js/map_fullscreen.js' %}"></script>
+            <link rel="stylesheet" href="{% static 'css/common.css' %}">
+        </div>
+    </div>
+    {% include 'WebApp/map_fullscreen_about.html' %}
+{% endblock %}

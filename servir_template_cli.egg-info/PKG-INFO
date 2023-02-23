@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: servir-template-cli
+Version: 0.0.2
+Summary: Installer for the SERVIR App Template
+Home-page: https://github.com/SERVIR/app_template_cli
+Author: Billy Ashmall
+Author-email: billy.ashmall@nasa.gov
+License: MIT License
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# SERVIR App Template Installer
+
+[![Python: 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![SERVIR: Global](https://img.shields.io/badge/SERVIR-Global-green)](https://servirglobal.net)
+
+This installer will help you get the SERVIR app template installed quickly and ready to modify.
+
+## Installation
+### Create a conda environment for the installer
+```shell
+conda create -n app-template python=3.9
+```
+### Activate environment
+```shell
+conda activate app-template
+```
+### Install servir_template_cli
+```shell
+pip install servir_template_cli
+```

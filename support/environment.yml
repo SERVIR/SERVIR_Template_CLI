@@ -1,0 +1,16 @@
+name: SERVIR_AppTemplate
+channels:
+  - defaults
+dependencies:
+  - python=3.9
+  - django=4.1
+  - django-allauth
+  - django-import-export
+  - netcdf4
+  - shapely
+  - earthengine-api
+  - beautifulsoup4
+  - pip
+  - pip:
+      - climateserv==0.0.24
+prefix: C:\ProgramData\Anaconda3\envs\SERVIR_AppTemplate

@@ -1,0 +1,111 @@
+{% extends "WebApp/app_base.html" %}
+{% load static %}
+
+{% block title %}SERVIR AppTemplate - Home{% endblock %}
+{% block script %}
+    <!-- Custom styles-->
+
+    <!-- Custom scripts-->
+{% endblock %}
+
+<!-- Begin Page Content -->
+{% block content %}
+    <div class="align-items-center justify-content-between bg-gray-300">
+        <div style="position: relative;">
+            <!-- Hero image in the home page -->
+            <!-- If there an image that represents the tool/organization, please update the src in the <img> below -->
+            <div>
+                <img
+                        class="img-fluid hero_style"
+                        src="{% static '/images/hero.jpg' %}"
+                        alt="Hero Image"
+                >
+                <div class="layer">
+                </div>
+                <div class="card-img-overlay ">
+                    <div class="text-center text-white vertical_center">
+                        <!-- Title on the hero image-->
+                        <p id="title_class">
+                            SERVIR
+                            Geospatial Application Template 2022 </p>
+                        <!-- Tagline under the title on the hero image-->
+                        <p id="tagline_class">
+                            This web application shows simple implementation of common user interface elements in
+                            geospatial
+                            information delivery. It is intended to be used as a starting point for building new
+                            applications for specialized use cases.
+                            This template app is created and maintanined by the SERVIR Science Coordination office</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Search bar -->
+        <!-- Search results are based on the title on the cards shown -->
+        <div class="container-fluid">
+            <div class="mt-4 form-outline">
+                <input type="search" id="searchBox" class="form-control" placeholder="Search for the app here..."
+                       aria-label="Search"/>
+            </div>
+
+            <!-- Application Template Cards -->
+            <!-- Looping through the list of cards to generate the interface that contains all the cards. This list can be updated in views.py -->
+            <div class="row flex_cards">
+
+                {% for app_card in app_cards %}
+
+                    <div class="app-card mb-4">
+                        <br>
+                        <div class="card shadow mb-4 mr-4 h-100 img-thumbnail">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">{{ app_card.name }}</h6>
+                            </div>
+                            <div class="card-body card_bg"
+                                 style="background-image: url('{{ app_card.background_image_url }}')">
+                                <div class="text-center">
+                                    <a href='{{ app_card.url }}' class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <!-- Description of the website -->
+                <!-- The description can be updated in the <p> tags below -->
+                <div class="row">`
+                    <div class="col-lg-12 mb-4">
+                        <br>
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Description</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                </div>
+                                <p>This web application shows typical implementations of common user interface
+                                    requirements
+                                    in geospatial information delivery. You can customize this template according to
+                                    your specific application workflow, combining different functions, such as
+                                    displayign
+                                    maps and charts in the same page, or eliminating unnecesary functions.</p>
+                                <p>This template app is created and maintanined by the SERVIR Science Coordination
+                                    office.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                        data-bs-target="#homeModal">
+                    Learn how to modify this page
+                </button>
+            </div>
+            <br>
+        </div>
+    </div>
+    <!-- End of Main Content -->
+
+    <script src="{% static '/js/home.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% include 'WebApp/home_about.html' %}
+{% endblock %}
