@@ -1,2 +1,0 @@
-[console_scripts]
-servir_template = servir_template:cli
