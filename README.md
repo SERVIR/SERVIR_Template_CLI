@@ -17,7 +17,7 @@ conda activate app-template
 ```
 ### Install servir_template_cli
 ```shell
-pip install servir_template_cli
+pip install servir-template-cli
 ```
 cd to a directory where you would like to start the application.  I recommend this be a common development directory. 
 You will create the specific directory with your project name in the next few steps. My directory where I start all 

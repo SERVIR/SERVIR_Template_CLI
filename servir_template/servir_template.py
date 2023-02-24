@@ -60,13 +60,9 @@ def create(name):
             sys.stdout.flush()
         stdout, stderr = process.communicate()
         click.echo(str(stderr))
-        # execute_cmd(["conda", "env", "create", "-f ", os.path.join(target, "environment.yml")])
     except Exception as e2:
         click.echo(str(e2))
 
-    # command = f"conda activate {name}; python " + os.path.join(target, "manage.py") + " migrate"
-    # ret = subprocess.run(command, stdout=subprocess.PIPE,
-    #                      stderr=subprocess.PIPE, shell=True)
     activate_cmd = f"conda activate {name}"
     migrate_cmd = "python " + os.path.join(target, "manage.py") + " migrate"
 

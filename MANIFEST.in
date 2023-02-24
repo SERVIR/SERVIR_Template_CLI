@@ -1,1 +1,3 @@
 include LICENSE
+include MANIFEST.in
+graft servir_template/support
