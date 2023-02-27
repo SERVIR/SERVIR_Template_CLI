@@ -2,9 +2,15 @@
 
 [![Python: 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Anaconda](https://anaconda.org/conda-forge/mlconjug/badges/version.svg)](https://www.anaconda.com/)
 [![SERVIR: Global](https://img.shields.io/badge/SERVIR-Global-green)](https://servirglobal.net)
 
 This installer will help you get the SERVIR app template installed quickly and ready to modify.
+
+## Required
+- [Anaconda](https://www.anaconda.com/) (Miniconda may also work)
+- [Python: 3.9](https://www.python.org/) 
+- [Google account](https://support.google.com/accounts/answer/27441?hl=en)
 
 ## Installation
 ### Create a conda environment for the installer

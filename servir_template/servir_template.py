@@ -1,12 +1,11 @@
+import fileinput
 import os
+import random
+import shutil
 import sqlite3
 import string
 import subprocess
-import shlex
-import shutil
-import fileinput
 import sys
-import random
 
 import click
 
@@ -21,11 +20,15 @@ def cli():
 def create(name):
     click.echo(f"Creating template project {name}")
     process = subprocess.Popen(["django-admin", "startproject", f"{name}"],
-                               shell=True,
+                               shell=os.name == 'nt',
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,
                                universal_newlines=True)
     stdout, stderr = process.communicate()
+    if stderr:
+        print(stderr)
+    if stdout:
+        print(stdout)
 
     source = os.path.join(os.path.dirname(__file__), "support")
     target = os.path.join(os.getcwd(), f"{name}")
@@ -45,12 +48,10 @@ def create(name):
         replace_string_in_file(target, name, "environment.yml", "SERVIR_AppTemplate")
     except Exception as e:
         click.echo(str(e))
-    #
     try:
         click.echo(f"Creating your conda environment named {name}, this may take some time, please wait.")
-
         process = subprocess.Popen(["conda", "env", "create", "-f", os.path.join(target, "environment.yml")],
-                                   shell=True,
+                                   shell=os.name == 'nt',
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE,
                                    universal_newlines=True)
@@ -66,8 +67,24 @@ def create(name):
     activate_cmd = f"conda activate {name}"
     migrate_cmd = "python " + os.path.join(target, "manage.py") + " migrate"
 
-    subprocess.call(activate_cmd +
-                    " && " + migrate_cmd, shell=True)
+    if os.name == 'nt':
+        subprocess.call(activate_cmd +
+                        " && " + migrate_cmd, shell=True)
+    else:
+        process = subprocess.Popen(["which conda"],
+                                   shell=True,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE,
+                                   universal_newlines=True)
+
+        stdout, stderr = process.communicate()
+
+        conda_path = stdout.strip().replace('bin/conda', 'etc/profile.d/conda.sh')
+
+        init_conda = 'source ' + conda_path
+
+        subprocess.call(init_conda + " && " + activate_cmd +
+                        " && " + migrate_cmd, executable='/bin/bash', shell=True)
 
     conn = sqlite3.connect(os.path.join(target, "db.sqlite3"))
     cursor = conn.cursor()
@@ -92,8 +109,6 @@ def create(name):
     remove_file(os.path.join(target, "environment.yml.bak"))
     remove_file(os.path.join(target, "data.json.bak"))
     remove_file(os.path.join(target, f"{name}", "settings.py.bak"))
-
-    #     update instructions
 
 
 def remove_file(which):

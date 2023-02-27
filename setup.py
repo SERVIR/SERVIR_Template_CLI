@@ -35,7 +35,7 @@ append_files('servir_template/support/WebApp/static/webfonts')
 
 setup(
     name='SERVIR_Template_CLI',
-    version='0.0.25',
+    version='0.0.33',
     author='Billy Ashmall',
     author_email='billy.ashmall@nasa.gov',
     license='MIT License',
@@ -47,9 +47,7 @@ setup(
     data_files=data_files,
     packages=find_packages(),
     install_requires=['click>=7.1.2',
-                      'django>=4.1',
-                      'GitPython',
-                      'click'],
+                      'django>=4.1'],
     python_requires='>=3.7',
     classifiers=[
         "Programming Language :: Python :: 3.9",
