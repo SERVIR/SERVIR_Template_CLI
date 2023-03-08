@@ -18,24 +18,24 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 append_files('support')
-append_files('servir_template/support/SERVIR_AppTemplate')
-append_files('servir_template/support/templates/socialaccount')
-append_files('servir_template/support/templates/WebApp')
-append_files('servir_template/support/WebApp')
-append_files('servir_template/support/WebApp/static')
-append_files('servir_template/support/WebApp/static/css')
-append_files('servir_template/support/WebApp/static/images')
-append_files('servir_template/support/WebApp/static/images/basemaps')
-append_files('servir_template/support/WebApp/static/images/cards')
-append_files('servir_template/support/WebApp/static/images/logos')
-append_files('servir_template/support/WebApp/static/images/readme')
-append_files('servir_template/support/WebApp/static/images/teammembers')
-append_files('servir_template/support/WebApp/static/js')
-append_files('servir_template/support/WebApp/static/webfonts')
+append_files('servir_template/support_unused/SERVIR_AppTemplate')
+append_files('servir_template/support_unused/templates/socialaccount')
+append_files('servir_template/support_unused/templates/WebApp')
+append_files('servir_template/support_unused/WebApp')
+append_files('servir_template/support_unused/WebApp/static')
+append_files('servir_template/support_unused/WebApp/static/css')
+append_files('servir_template/support_unused/WebApp/static/images')
+append_files('servir_template/support_unused/WebApp/static/images/basemaps')
+append_files('servir_template/support_unused/WebApp/static/images/cards')
+append_files('servir_template/support_unused/WebApp/static/images/logos')
+append_files('servir_template/support_unused/WebApp/static/images/readme')
+append_files('servir_template/support_unused/WebApp/static/images/teammembers')
+append_files('servir_template/support_unused/WebApp/static/js')
+append_files('servir_template/support_unused/WebApp/static/webfonts')
 
 setup(
     name='SERVIR_Template_CLI',
-    version='0.0.33',
+    version='0.0.39',
     author='Billy Ashmall',
     author_email='billy.ashmall@nasa.gov',
     license='MIT License',
@@ -48,7 +48,7 @@ setup(
     packages=find_packages(),
     install_requires=['click>=7.1.2',
                       'django>=4.1'],
-    python_requires='>=3.7',
+    python_requires='>=3.9',
     classifiers=[
         "Programming Language :: Python :: 3.9",
         "Operating System :: OS Independent",

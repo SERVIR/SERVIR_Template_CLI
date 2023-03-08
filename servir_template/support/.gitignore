@@ -1,8 +1,0 @@
-/venv/
-/.idea/
-*.pyc
-**/__pycache__/
-data.json
-db.sqlite3
-key.json
-staticfiles

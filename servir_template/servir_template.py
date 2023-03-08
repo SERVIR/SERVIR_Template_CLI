@@ -3,11 +3,15 @@ import os
 import random
 import shutil
 import sqlite3
+import stat
 import string
 import subprocess
 import sys
-
+import json
 import click
+import uuid
+
+import git
 
 
 @click.group()
@@ -30,10 +34,15 @@ def create(name):
     if stdout:
         print(stdout)
 
-    source = os.path.join(os.path.dirname(__file__), "support")
+    temp_dir = str(uuid.uuid1())
+
+    git.Git(os.path.join(os.getcwd(), temp_dir)).clone("git@github.com:SERVIR/AppTemplate2022.git",
+                                                     os.path.join(os.getcwd(), temp_dir))
+
+    source = os.path.join(os.getcwd(), temp_dir)
     target = os.path.join(os.getcwd(), f"{name}")
 
-    shutil.copytree(source, target, dirs_exist_ok=True)
+    shutil.copytree(source, target, dirs_exist_ok=True, ignore=shutil.ignore_patterns(".git*", "manage.py"))
     shutil.copyfile(os.path.join(
         target,
         "SERVIR_AppTemplate", "settings.py")
@@ -48,6 +57,18 @@ def create(name):
         replace_string_in_file(target, name, "environment.yml", "SERVIR_AppTemplate")
     except Exception as e:
         click.echo(str(e))
+
+    letters = string.ascii_letters + string.digits + string.punctuation
+    letters = letters.replace("/", "").replace("\\", "").replace("\"", "").replace("'", "")
+    result_str = ''.join(random.choice(letters) for i in range(64))
+
+    with open(os.path.join(os.path.dirname(__file__), "support", "data.json"), 'r+') as f:
+        data = json.load(f)
+        data["SECRET_KEY"] = result_str
+
+    with open(os.path.join(target,"data.json"), 'w') as fs:
+        json.dump(data, fs , indent=4, sort_keys=True)
+
     try:
         click.echo(f"Creating your conda environment named {name}, this may take some time, please wait.")
         process = subprocess.Popen(["conda", "env", "create", "-f", os.path.join(target, "environment.yml")],
@@ -79,12 +100,13 @@ def create(name):
 
         stdout, stderr = process.communicate()
 
-        conda_path = stdout.strip().replace('bin/conda', 'etc/profile.d/conda.sh')
+        conda_path = os.path.join(os.path.split(os.path.split(stdout)[0])[0], "etc", "profile.d", "conda.sh")
 
         init_conda = 'source ' + conda_path
 
         subprocess.call(init_conda + " && " + activate_cmd +
                         " && " + migrate_cmd, executable='/bin/bash', shell=True)
+
 
     conn = sqlite3.connect(os.path.join(target, "db.sqlite3"))
     cursor = conn.cursor()
@@ -99,15 +121,16 @@ def create(name):
     conn.commit()
     conn.close()
 
-    letters = string.ascii_letters + string.digits + string.punctuation
-    letters = letters.replace("/", "").replace("\\","").replace("\"", "").replace( "'", "")
-    result_str = ''.join(random.choice(letters) for i in range(64))
-
-    replace_string_in_file(target, result_str, "data.json", "SECRET_KEY_HOLDER")
+    # replace_string_in_file(target, result_str, "data.json", "SECRET_KEY_HOLDER")
 
     shutil.rmtree(os.path.join(target, "SERVIR_AppTemplate"))
+    for root, dirs, files in os.walk(source):
+        for directory in dirs:
+            os.chmod(os.path.join(root, directory), stat.S_IRWXU)
+        for file in files:
+            os.chmod(os.path.join(root, file), stat.S_IRWXU)
+    shutil.rmtree(source)
     remove_file(os.path.join(target, "environment.yml.bak"))
-    remove_file(os.path.join(target, "data.json.bak"))
     remove_file(os.path.join(target, f"{name}", "settings.py.bak"))
 
 

@@ -11,6 +11,7 @@ This installer will help you get the SERVIR app template installed quickly and r
 - [Anaconda](https://www.anaconda.com/) (Miniconda may also work)
 - [Python: 3.9](https://www.python.org/) 
 - [Google account](https://support.google.com/accounts/answer/27441?hl=en)
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) (must also be in system path)
 
 ## Installation
 ### Create a conda environment for the installer
@@ -42,6 +43,9 @@ servir_template create -n name_ur_app_here
 
 Your application has now been created inside the directory of the name you provided above.  Enter the directory
 to continue.
+```shell
+cd name_ur_app_here
+```
 
 Before editing the application you will need to have an Earth Engine (EE) account, and a Google cloud project where 
 you will enable both EE and Google Authentication.  To do that follow these steps:
@@ -86,13 +90,19 @@ so when you push your application to github it will not go with the rest of your
 looks like the following.
 ```json
 {
-  "SECRET_KEY": "{yx+Z9or:Yuisk>:&R%-NZ%oUk@BB!XAL#?RZay=^U>MDY?Qj=e^-YT3u^dp):~|",
-  "ALLOWED_HOSTS": ["localhost", "127.0.0.1"],
-  "CSRF_TRUSTED_ORIGINS": ["http://localhost:8000", "http://127.0.0.1:8000"],
-  "private_key_json" : "path_to_key_file_from_google_console",
-  "DATA_DIR" : "path_to_data_directory",
-  "service_account" : "registered_ee_service_account_associated_with_key",
-  "sample_netCDF": "https://thredds.servirglobal.net/thredds/fileServer/mk_aqx/geos/20191123.nc"
+   "ALLOWED_HOSTS": [
+      "localhost",
+      "127.0.0.1"
+   ],
+   "CSRF_TRUSTED_ORIGINS": [
+      "http://localhost:8000",
+      "http://127.0.0.1:8000"
+   ],
+   "DATA_DIR": "path_to_data_directory",
+   "SECRET_KEY": "{yx+Z9or:Yuisk>:&R%-NZ%oUk@BB!XAL#?RZay=^U>MDY?Qj=e^-YT3u^dp):~|",
+   "private_key_json": "path_to_key_file_from_google_console",
+   "sample_netCDF": "https://thredds.servirglobal.net/thredds/fileServer/mk_aqx/geos/20191123.nc"
+   "service_account": "registered_ee_service_account_associated_with_key"
 }
 ```
 To begin you will need to enter the path to your key file that you created in the Google console, where it says
@@ -101,7 +111,7 @@ path_to_key_file_from_google_console.  If you are using a Windows machine be sur
 For DATA_DIR, create a separate directory some place, usually out of the actual application directory to store 
 data.  Replace path_to_data_directory with that path.  To use the example in the template you will need to create a 
 subdirectory named geos, and download
-https://thredds.servirglobal.net/thredds/fileServer/mk%5C_aqx/geos/20191123.nc to the directory. 
+https://thredds.servirglobal.net/thredds/fileServer/mk_aqx/geos/20191123.nc to the directory. 
 
 Replace registered_ee_service_account_associated_with_key with the email address of the Google service account.
 
